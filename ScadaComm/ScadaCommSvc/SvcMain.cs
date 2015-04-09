@@ -34,7 +34,7 @@ namespace Scada.Comm.Svc
     /// ScadaCommSvc service implementation
     /// <para>Реализация службы ScadaCommSvc</para>
     /// </summary>
-    public partial class SvcMain : ServiceBase
+    public partial class SvcMain
     {
         private Manager mngr; // менеджер, управляющий работой приложения
         private Log appLog;   // журнал приложения
@@ -48,7 +48,7 @@ namespace Scada.Comm.Svc
             appLog = mngr.Log;
         }
 
-        protected override void OnStart(string[] args)
+        public void OnStart(string[] args)
         {
             // инициализация необходимых директорий
             bool dirsExist;    // необходимые директории существуют
@@ -103,7 +103,7 @@ namespace Scada.Comm.Svc
             }
         }
 
-        protected override void OnStop()
+        public void OnStop()
         {
             mngr.StopThreads();
             appLog.WriteAction(Localization.UseRussian ? "Служба ScadaCommService остановлена" :
@@ -111,7 +111,7 @@ namespace Scada.Comm.Svc
             appLog.WriteBreak();
         }
 
-        protected override void OnShutdown()
+        public void OnShutdown()
         {
             mngr.StopThreads();
             appLog.WriteAction(Localization.UseRussian ? "Служба ScadaCommService отключена" :

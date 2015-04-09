@@ -7,6 +7,7 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /*
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -19,7 +20,7 @@
             }
             base.Dispose(disposing);
         }
-
+        */
         #region Component Designer generated code
 
         /// <summary> 
@@ -31,7 +32,7 @@
             // 
             // SvcMain
             // 
-            this.ServiceName = "ScadaServerService";
+            //this.ServiceName = "ScadaServerService";
 
         }
 

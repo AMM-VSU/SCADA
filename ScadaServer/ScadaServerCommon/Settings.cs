@@ -191,10 +191,10 @@ namespace Scada.Server
             LdapPath = "";
             DetailedLog = false;
 
-            BaseDATDir = @"C:\SCADA\BaseDAT\";
-            ItfDir = @"C:\SCADA\Interface\";
-            ArcDir = @"C:\SCADA\ArchiveDAT\";
-            ArcCopyDir = @"C:\SCADA\ArchiveDATCopy\";
+            BaseDATDir = @"..\BaseDAT\";
+            ItfDir = @"..\Interface\";
+            ArcDir = @"..\ArchiveDAT\";
+            ArcCopyDir = @"..\ArchiveDATCopy\";
 
             WriteCurPer = 5;
             InactUnrelTime = 5;

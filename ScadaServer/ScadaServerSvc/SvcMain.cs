@@ -34,7 +34,7 @@ namespace Scada.Server.Svc
     /// ScadaServerSvc service implementation
     /// <para>Реализация службы ScadaServerSvc</para>
     /// </summary>
-    public partial class SvcMain : ServiceBase
+    public partial class SvcMain
     {
         private MainLogic mainLogic; // объект, реализующий логику сервера
         private Log appLog;          // журнал приложения
@@ -48,12 +48,12 @@ namespace Scada.Server.Svc
             appLog = mainLogic.AppLog;
         }
 
-        private void StopWork()
+        public void StopWork()
         {
             mainLogic.Stop();
         }
 
-        protected override void OnStart(string[] args)
+        public void OnStart(string[] args)
         {
             // инициализация необходимых директорий
             bool dirsExist;    // необходимые директории существуют
@@ -106,7 +106,7 @@ namespace Scada.Server.Svc
             }
         }
 
-        protected override void OnStop()
+        public void OnStop()
         {
             StopWork();
             appLog.WriteAction(Localization.UseRussian ? "Служба ScadaServerService остановлена" :
@@ -114,7 +114,7 @@ namespace Scada.Server.Svc
             appLog.WriteBreak();
         }
 
-        protected override void OnShutdown()
+        public void OnShutdown()
         {
             StopWork();
             appLog.WriteAction(Localization.UseRussian ? "Служба ScadaServerService отключена" :

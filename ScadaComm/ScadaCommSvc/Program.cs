@@ -35,7 +35,10 @@ namespace Scada.Comm.Svc
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
+            //ServiceBase[] ServicesToRun;
+            SvcMain sv = new SvcMain();
+            sv.OnStart(null);
+            Console.ReadLine();
 
             // More than one user Service may run within the same process. To add
             // another service to this process, change the following line to
@@ -43,9 +46,10 @@ namespace Scada.Comm.Svc
             //
             //   ServicesToRun = new ServiceBase[] {new Service1(), new MySecondUserService()};
             //
-            ServicesToRun = new ServiceBase[] { new SvcMain() };
+            //ServicesToRun = new ServiceBase[] { new SvcMain() };
 
-            ServiceBase.Run(ServicesToRun);
+
+            //ServiceBase.Run(ServicesToRun);
         }
     }
 }

@@ -770,11 +770,12 @@ namespace Scada.Comm.Svc
         /// </summary>
         public void InitAppDirs(out bool dirsExist, out bool logDirExists)
         {
-            ConfigDir = ExeDir + "Config\\";
-            LangDir = ExeDir + "Lang\\";
-            LogDir = ExeDir + "Log\\";
-            KpDir = ExeDir + "KP\\";
-            CmdDir = ExeDir + "Cmd\\";
+            ExeDir = "";
+            ConfigDir = ExeDir + "Config/";
+            LangDir = ExeDir + "Lang/";
+            LogDir = ExeDir + "Log/";
+            KpDir = ExeDir + "KP/";
+            CmdDir = ExeDir + "Cmd/";
 
             Log.FileName = LogDir + LogFileName;
             infoFileName = LogDir + InfoFileName;

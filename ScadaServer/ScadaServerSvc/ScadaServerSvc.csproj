@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D876BF85-C99B-4C16-A053-8877C84E7E02}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Scada.Server.Svc</RootNamespace>
     <AssemblyName>ScadaServerSvc</AssemblyName>
@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Log">
       <HintPath>..\..\Log\bin\Release\Log.dll</HintPath>
@@ -76,9 +79,7 @@
     </Compile>
     <Compile Include="MainLogic.cs" />
     <Compile Include="MainLogic.Types.cs" />
-    <Compile Include="SvcMain.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="SvcMain.cs" />
     <Compile Include="SvcMain.Designer.cs">
       <DependentUpon>SvcMain.cs</DependentUpon>
     </Compile>
@@ -97,6 +98,8 @@
     <Content Include="Config\ScadaServerSvcConfig.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Log.dll" />
+    <Content Include="ScadaData.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

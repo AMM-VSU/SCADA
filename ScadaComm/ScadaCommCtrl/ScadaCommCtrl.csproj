@@ -148,6 +148,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Log.dll" />
+    <Content Include="ScadaData.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KP\KP.csproj">

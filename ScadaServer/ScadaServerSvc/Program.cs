@@ -35,12 +35,16 @@ namespace Scada.Server.Svc
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-			{ 
-				new SvcMain() 
-			};
-            ServiceBase.Run(ServicesToRun);
+            SvcMain svc = new SvcMain();
+            svc.OnStart(null);
+            Console.Write("press enter to exit...");
+            Console.ReadLine();
+            //ServiceBase[] ServicesToRun;
+            //ServicesToRun = new ServiceBase[] 
+			//{ 
+				//new SvcMain() 
+			//};
+           // ServiceBase.Run(ServicesToRun);
         }
     }
 }
