@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.ServiceProcess;
+using System.Threading;
 using Utils;
 
 namespace Scada.Comm.Svc
@@ -39,6 +40,10 @@ namespace Scada.Comm.Svc
         private Manager mngr; // менеджер, управляющий работой приложения
         private Log appLog;   // журнал приложения
 
+        private Thread checkThread;
+        private const int CHECK_DELAY = 300;
+        private const string STOP_FILE_PATH = @"..\SysFiles\COMM.STOP";
+
         public SvcMain()
         {
             InitializeComponent();
@@ -46,6 +51,23 @@ namespace Scada.Comm.Svc
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             mngr = new Manager();
             appLog = mngr.Log;
+            checkThread = new Thread(new ThreadStart(CheckStopFile));
+            
+        }
+
+        private void CheckStopFile() 
+        {
+            while (true)
+            {
+                if (System.IO.File.Exists(STOP_FILE_PATH))                    
+                {
+                    
+                    this.OnStop();
+                    Thread.CurrentThread.Abort();                      
+                }
+                else 
+                    Thread.Sleep(CHECK_DELAY);
+            }
         }
 
         public void OnStart(string[] args)
@@ -76,7 +98,10 @@ namespace Scada.Comm.Svc
 
                 // считывание конфигурации и запуск потоков
                 if (mngr.ParseConfig())
+                {
                     mngr.StartThreads();
+                    checkThread.Start();
+                }
                 else
                     appLog.WriteAction(Localization.UseRussian ? "Нормальная работа программы невозможна." :
                         "Normal program execution is impossible.", Log.ActTypes.Error);
@@ -104,8 +129,10 @@ namespace Scada.Comm.Svc
         }
 
         public void OnStop()
-        {
+        {            
             mngr.StopThreads();
+            System.IO.File.Delete(STOP_FILE_PATH);
+
             appLog.WriteAction(Localization.UseRussian ? "Служба ScadaCommService остановлена" :
                 "ScadaCommService is stopped", Log.ActTypes.Action);
             appLog.WriteBreak();

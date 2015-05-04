@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="Log">
       <HintPath>..\..\Log\bin\Release\Log.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -76,6 +77,7 @@
     <Content Include="Lang\ScadaData.en-GB.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Log.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

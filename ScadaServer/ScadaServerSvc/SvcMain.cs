@@ -26,6 +26,7 @@
 using System;
 using System.Diagnostics;
 using System.ServiceProcess;
+using System.Threading;
 using Utils;
 
 namespace Scada.Server.Svc
@@ -39,6 +40,10 @@ namespace Scada.Server.Svc
         private MainLogic mainLogic; // объект, реализующий логику сервера
         private Log appLog;          // журнал приложения
 
+        private Thread checkThread;
+        private const int CHECK_DELAY = 300;
+        private const string STOP_FILE_PATH = @"..\SysFiles\SRV.STOP";
+
         public SvcMain()
         {
             InitializeComponent();
@@ -46,11 +51,28 @@ namespace Scada.Server.Svc
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             mainLogic = new MainLogic();
             appLog = mainLogic.AppLog;
+            checkThread = new Thread(new ThreadStart(CheckStopFile));
+        }
+
+        private void CheckStopFile()
+        {
+            while (true)
+            {
+                if (System.IO.File.Exists(STOP_FILE_PATH))
+                {
+
+                    this.OnStop();
+                    Thread.CurrentThread.Abort();
+                }
+                else
+                    Thread.Sleep(CHECK_DELAY);
+            }
         }
 
         public void StopWork()
         {
             mainLogic.Stop();
+            System.IO.File.Delete(STOP_FILE_PATH);
         }
 
         public void OnStart(string[] args)
@@ -83,6 +105,8 @@ namespace Scada.Server.Svc
                 if (!mainLogic.Start())
                     appLog.WriteAction(Localization.UseRussian ? "Нормальная работа программы невозможна." : 
                         "Normal program execution is impossible.", Log.ActTypes.Error);
+                else
+                    checkThread.Start();
             }
             else
             {
@@ -109,6 +133,7 @@ namespace Scada.Server.Svc
         public void OnStop()
         {
             StopWork();
+
             appLog.WriteAction(Localization.UseRussian ? "Служба ScadaServerService остановлена" :
                 "ScadaServerService is stopped", Log.ActTypes.Action);
             appLog.WriteBreak();
